@@ -104,7 +104,7 @@ public class Term extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTextArea1.setBackground(new java.awt.Color(1, 1, 1));
         jTextArea1.setColumns(20);
@@ -153,7 +153,11 @@ public class Term extends javax.swing.JFrame {
         if(evt.isControlDown()||evt.isAltDown())g=evt.getKeyChar();
         else kg+=evt.getKeyChar();
     }//GEN-LAST:event_jTextArea1KeyTyped
-
+    @Override
+    public void dispose(){
+        if(bash.isAlive())bash.destroyForcibly();
+        super.dispose();
+    }
     /**
      * @param args the command line arguments
      */
