@@ -31,8 +31,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -157,6 +161,12 @@ public class MainFrame extends javax.swing.JFrame {
         jButton12 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jPanel8 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable2 = new javax.swing.JTable();
+        jButton6 = new javax.swing.JButton();
+        jButton18 = new javax.swing.JButton();
+        jButton19 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel(){
@@ -532,6 +542,8 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton5.setBackground(new java.awt.Color(255, 100, 100));
+        jButton5.setFont(new java.awt.Font("A Dark Wedding", 0, 18)); // NOI18N
         jButton5.setText("Open Shell");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -586,6 +598,76 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         jTabbedPane1.addTab("Utilities", jPanel6);
+
+        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable2MouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTable2);
+
+        jButton6.setText("Contacts");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton18.setText("Messages");
+        jButton18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton18ActionPerformed(evt);
+            }
+        });
+
+        jButton19.setText("Logs");
+        jButton19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton19ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addComponent(jButton6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton19)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel8Layout.createSequentialGroup()
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton6)
+                    .addComponent(jButton18)
+                    .addComponent(jButton19))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jTabbedPane1.addTab("Telephony", jPanel8);
 
         jLabel4.setBackground(new java.awt.Color(252, 132, 12));
         jLabel4.setFont(new java.awt.Font("A Dark Wedding", 0, 20)); // NOI18N
@@ -683,7 +765,8 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     String device,model,build,brand,serial,soc,os,osn,sdk,busybox,sdev;
     Thread ScanThread,statusThread,logcat;
-    //boolean root;
+    boolean root;
+    Connection conc,cons;
     /**
      * Starts scanning of connected device and fetches info, screenshot, logcat info and starts monitor.
      * @param evt mouse click event
@@ -760,13 +843,23 @@ public class MainFrame extends javax.swing.JFrame {
                     build =eng.getprop("ro.build.display.id");
                     soc=eng.getprop("ro.board.platform");
                     busybox=eng.run(eng.adb,"shell","busybox");
-                    //root=eng.rootCheck();
+                    root=eng.rootCheck();
                     String s=eng.getShot();
-                    
+                    jPanel8.setEnabled(root);
                     screen=ImageIO.read(new File(s));
                     jPanel7.repaint();
                     jLabel6.setText("["+brand+" "+model+" Screenshot]");
-                    
+                    if(root){
+                            try {
+                                Class.forName("org.sqlite.JDBC");
+                        eng.run(eng.adb,"pull","/data/data/com.android.providers.contacts/databases/",eng.ush+"/.ads/");
+                        eng.run(eng.adb,"pull","/data/data/com.android.providers.telephony/databases/",eng.ush+"/.ads/");
+                            cons=DriverManager.getConnection("jdbc:sqlite:"+eng.ush+"/.ads/mmssms.db");
+                            conc=DriverManager.getConnection("jdbc:sqlite:"+eng.ush+"/.ads/contacts2.db");
+                            } catch (SQLException | ClassNotFoundException ex) {
+                                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                    }
                     
                     if(busybox.toLowerCase().startsWith("busybox"))busybox="Yes";
                     else busybox="No";
@@ -777,7 +870,7 @@ public class MainFrame extends javax.swing.JFrame {
                             + "<tr><td><b>Android Version:</b></td><td>"+os+"("+eng.getAndroid()+")</td></tr>"
                             + "<tr><td><b>Android SDK:</b></td><td>"+sdk+"</td></tr>"
                             + "<tr><td><b>SOC:</b></td><td>"+soc+"</td></tr>"
-                            //+ "<tr><td><b>Root enabled:</b></td><td>"+(root?"Yes":"No (maybe not permitted over adb)")+"</td></tr>"
+                            + "<tr><td><b>Root enabled:</b></td><td>"+(root?"Yes":"No (maybe not permitted over adb)")+"</td></tr>"
                             + "<tr><td><b>Busybox:</b></td><td>"+busybox+"</td></tr>"
                             + "</table></body></html>");
                     
@@ -1493,6 +1586,136 @@ BufferedImage footer;
         // TODO add your handling code here:
         new Term(eng.adb,"-s",sdev,"shell").setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            Statement stmt=conc.createStatement();
+            ResultSet rs=stmt.executeQuery("SELECT raw_contacts._id, raw_contacts.display_name, raw_contacts.display_name_alt, mimetypes.mimetype,data.data1, data.data2,data.data3,data.data4,  data.data5, data.data6, data.data7, data.data8, data.data9, data.data10 FROM raw_contacts, data, mimetypes WHERE raw_contacts.deleted = 0 AND raw_contacts._id = data.raw_contact_id AND data.mimetype_id = mimetypes._id ;");
+            //ORDER BY raw_contacts._id, mimetypes._id, data.data2
+            DefaultTableModel dtm=new DefaultTableModel(new String[]{"Name","Phone","Email","Address","Identity"},0);
+            int g=0;
+            String rdata="";
+            String data[]=null;
+            while(rs.next()){
+                if(!rdata.equals(rs.getString(1))&&g<10){
+                    g=0;
+                    rdata=rs.getString(1);
+                    dtm.addRow(data);
+                    data=null;
+                }
+                
+                if(data==null)data=new String[]{"","","","",""};
+                String mime=rs.getString("mimetype");
+                mime=mime.substring(mime.lastIndexOf("/"));
+                String gd=(rs.getString("data1")==null?"":(rs.getString("data1")/*+" ("+
+                        (rs.getString("data2")==null?"":rs.getString("data2")+", ")+
+                        (rs.getString("data3")==null?"":rs.getString("data3")+", ")+
+                        (rs.getString("data4")==null?"":rs.getString("data4")+", ")+
+                        (rs.getString("data5")==null?"":rs.getString("data5")+", ")+
+                        (rs.getString("data6")==null?"":rs.getString("data6")+", ")+
+                        (rs.getString("data7")==null?"":rs.getString("data7")+", ")+
+                        (rs.getString("data8")==null?"":rs.getString("data8")+", ")+
+                        (rs.getString("data9")==null?"":rs.getString("data9"))+")"*/))
+                        ;
+                
+                if(gd!=null)if(!gd.trim().equals("")){
+                
+                    if(mime.contains("email")){
+                        if(!data[2].equals(""))data[2]+=", \n";
+                        data[2]+=gd;
+                    }
+                    if(mime.contains("phone")){
+                        if(!data[1].equals(""))data[1]+=", \n";
+                        data[1]+=gd;
+                    }
+                    if(mime.contains("name")){
+                        if(!data[0].equals(""))data[0]+=", \n";
+                        data[0]+=gd;
+                    }
+                    if(mime.contains("address")){
+                        if(!data[3].equals(""))data[3]+=", \n";
+                        data[3]+=gd;
+                    }
+                    if(mime.contains("identity")){
+                        if(!data[4].equals(""))data[4]+=", \n";
+                        data[4]+=gd;
+                    }
+                }
+            }
+            jTable2.setModel(dtm);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jTable2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable2MouseClicked
+        // TODO add your handling code here:
+                int r=jTable2.getSelectedRow();
+        if(r!=-1){
+        String s="";
+        for(int i=0;i<jTable2.getColumnCount();i++){
+            Object k=jTable2.getValueAt(r, i);
+            if(k!=null)if(!k.toString().trim().equals(""))s+=jTable2.getColumnName(i)+": "+k+"\n\n";
+        }
+            JOptionPane.showMessageDialog(null, s);
+                
+        }
+    }//GEN-LAST:event_jTable2MouseClicked
+
+    private void jButton18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton18ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            Statement stmt=cons.createStatement();
+            ResultSet rs=stmt.executeQuery("select * from sms;");
+            String[] clm={"Number","Date/Time ("+(TimeZone.getDefault().getDisplayName())+")","Subject","Body","Service Center"};
+            DefaultTableModel dtm=new DefaultTableModel(clm,0);
+            while(rs.next()){
+                String data[]=new String[clm.length];
+                data[0]=rs.getString("address");
+                Date dt=new Date(Long.parseLong(rs.getString("date")));
+                DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                format.setTimeZone(TimeZone.getDefault());
+                data[1]=format.format(dt);
+                data[2]=rs.getString("subject");
+                data[3]=rs.getString("body");
+                data[4]=rs.getString("service_center");
+                dtm.addRow(data);
+            }
+            jTable2.setModel(dtm);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton18ActionPerformed
+
+    private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
+        // TODO add your handling code here:
+                        try {
+            // TODO add your handling code here:
+            Statement stmt=conc.createStatement();
+            ResultSet rs=stmt.executeQuery("select * from calls;");
+            String[] clm={"Name","Number","Date/Time ("+(TimeZone.getDefault().getDisplayName())+")","Duration","Type"};
+            DefaultTableModel dtm=new DefaultTableModel(clm,0);
+            while(rs.next()){
+                String data[]=new String[clm.length];
+                data[0]=rs.getString("name");
+                data[1]=rs.getString("number");
+                Date dt=new Date(Long.parseLong(rs.getString("date")));
+                DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                format.setTimeZone(TimeZone.getDefault());
+                data[2]=format.format(dt);
+                data[3]=rs.getString("duration")+" secs";
+                int typ=rs.getInt("type");
+                data[4]=typ==1?"Incoming":typ==2?"Outgoing":"Missed";
+                dtm.addRow(data);
+            }
+            jTable2.setModel(dtm);
+        } catch (SQLException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton19ActionPerformed
     int lx=0,ly=0,px,py;
     
     /**
@@ -1634,10 +1857,13 @@ BufferedImage footer;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
+    private javax.swing.JButton jButton18;
+    private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
@@ -1655,11 +1881,14 @@ BufferedImage footer;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable2;
     private javax.swing.JMenuItem newFM;
     private javax.swing.JMenuItem openM;
     private javax.swing.JMenuItem refresh;
