@@ -877,7 +877,7 @@ public class MainFrame extends javax.swing.JFrame {
                     
                     statusThread=new Thread(() -> {
                         try {
-                            Process p=Runtime.getRuntime().exec(new String[]{eng.adb,"status-window"});
+                            Process p=Runtime.getRuntime().exec(new String[]{eng.adb,"-s",sdev,"status-window"});
                             InputStream is=p.getInputStream();
                             int a;
                             String k="";
@@ -906,7 +906,7 @@ public class MainFrame extends javax.swing.JFrame {
                         String strk="";
                         logal=new ArrayList<>();
                         try{
-                            Process p=Runtime.getRuntime().exec(new String[]{eng.adb,"logcat"});
+                            Process p=Runtime.getRuntime().exec(new String[]{eng.adb,"-s",sdev,"logcat"});
                             InputStream is=p.getInputStream();
                             int a;
                             do{
