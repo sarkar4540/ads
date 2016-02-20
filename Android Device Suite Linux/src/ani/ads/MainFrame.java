@@ -1539,17 +1539,16 @@ BufferedImage footer;
             c.setVisible(true); 
             c.setLocation(250,150);
                 try {
-                    /*if(f.isDirectory()){
-                        List<FType> ft=jList1.getSelectedValuesList();
-                        for(FType fk:ft){
-                            String fn=fk.to().trim();
+                    if(f.isDirectory()){
+                        FType ft=(FType)jList1.getSelectedValue();
+                            String fn=ft.to().trim();
                             eng.run(eng.adb,"pull", curdird+fn,f.getAbsolutePath());
-                        }
+                        
                     }
                     else{
                         String fn=((FType)jList1.getSelectedValue()).to().trim();
                         eng.run(eng.adb,"pull", curdird+fn,f.getAbsolutePath());
-                    }*/
+                    }
                     if(!f.isDirectory()&&f.exists()){
                         Desktop.getDesktop().open(f.getParentFile());
                     }
