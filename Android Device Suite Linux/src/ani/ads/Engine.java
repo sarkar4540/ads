@@ -261,11 +261,10 @@ public String adb,dev;
     
     
     
-    @Deprecated
     public boolean rootCheck() throws IOException{
             String out="";
             try {
-                Process p=new ProcessBuilder(new String[]{adb,"shell","su"}).start();
+                Process p=new ProcessBuilder(new String[]{adb,"-s",dev,"root"}).start();
                 InputStream is=p.getInputStream();
                 InputStream es=p.getErrorStream();
                 int a,b;
@@ -277,7 +276,7 @@ public String adb,dev;
                 }while(a>-1||b>-1);
                 p.destroy();
                 out=out.trim().toLowerCase();
-                return !out.contains("permission denied");
+                return out.endsWith("root");
             } catch (IOException ex) {
                 Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
             }
