@@ -18,8 +18,6 @@ package ani.ads;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintStream;
-import java.lang.ProcessBuilder.Redirect;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -91,7 +89,12 @@ public class Term extends javax.swing.JFrame {
     Process bash;
     String kg="",drg="";
     int g='\n';
-    
+    @Override
+    public final void dispose(){
+        if(bash.isAlive())
+            bash.destroyForcibly();
+        super.dispose();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -104,7 +107,7 @@ public class Term extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jTextArea1.setBackground(new java.awt.Color(1, 1, 1));
         jTextArea1.setColumns(20);

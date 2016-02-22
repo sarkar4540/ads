@@ -544,6 +544,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jButton5.setBackground(new java.awt.Color(255, 100, 100));
         jButton5.setFont(new java.awt.Font("A Dark Wedding", 0, 18)); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ani/ads/utilities-terminal.png"))); // NOI18N
         jButton5.setText("Open Shell");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -599,15 +600,14 @@ public class MainFrame extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Utilities", jPanel6);
 
+        jPanel8.setBackground(new java.awt.Color(255, 0, 0));
+
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
         jTable2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -617,6 +617,8 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTable2);
 
+        jButton6.setBackground(new java.awt.Color(255, 100, 100));
+        jButton6.setFont(new java.awt.Font("A Dark Wedding", 0, 18)); // NOI18N
         jButton6.setText("Contacts");
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -624,6 +626,8 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton18.setBackground(new java.awt.Color(255, 100, 100));
+        jButton18.setFont(new java.awt.Font("A Dark Wedding", 0, 18)); // NOI18N
         jButton18.setText("Messages");
         jButton18.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -631,6 +635,8 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton19.setBackground(new java.awt.Color(255, 100, 100));
+        jButton19.setFont(new java.awt.Font("A Dark Wedding", 0, 18)); // NOI18N
         jButton19.setText("Logs");
         jButton19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -663,7 +669,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jButton18)
                     .addComponent(jButton19))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1668,7 +1674,7 @@ BufferedImage footer;
         try {
             // TODO add your handling code here:
             Statement stmt=cons.createStatement();
-            ResultSet rs=stmt.executeQuery("select * from sms;");
+            ResultSet rs=stmt.executeQuery("select * from sms order by _id desc;");
             String[] clm={"Number","Date/Time ("+(TimeZone.getDefault().getDisplayName())+")","Subject","Body","Service Center"};
             DefaultTableModel dtm=new DefaultTableModel(clm,0);
             while(rs.next()){
@@ -1694,7 +1700,7 @@ BufferedImage footer;
                         try {
             // TODO add your handling code here:
             Statement stmt=conc.createStatement();
-            ResultSet rs=stmt.executeQuery("select * from calls;");
+            ResultSet rs=stmt.executeQuery("select * from calls order by _id desc;");
             String[] clm={"Name","Number","Date/Time ("+(TimeZone.getDefault().getDisplayName())+")","Duration","Type"};
             DefaultTableModel dtm=new DefaultTableModel(clm,0);
             while(rs.next()){
