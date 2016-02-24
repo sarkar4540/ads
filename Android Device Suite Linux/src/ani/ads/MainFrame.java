@@ -864,6 +864,8 @@ public class MainFrame extends javax.swing.JFrame {
             jButton2.setEnabled(false);
             ScanThread=new Thread(() -> {
                 try {
+                    screen=ImageIO.read(getClass().getResource("/ani/ads/search.png"));
+                    jPanel7.repaint();
                     sdev=null;
                     eng.clearDev();
                     eng.run(eng.adb,"start-server");
@@ -912,8 +914,6 @@ public class MainFrame extends javax.swing.JFrame {
                             }
                     }
                     if(sdev!=null){
-                    screen=ImageIO.read(getClass().getResource("/ani/ads/search.png"));
-                    jPanel7.repaint();
                     recovery=sdev.trim().endsWith("recovery");
                         sdev=sdev.trim().substring(0, sdev.indexOf(" "));
                     eng.setdev(sdev);
