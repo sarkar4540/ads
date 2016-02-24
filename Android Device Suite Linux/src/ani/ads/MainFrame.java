@@ -47,6 +47,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollBar;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileFilter;
@@ -57,7 +58,7 @@ import javax.swing.table.DefaultTableModel;
  * @author ani
  */
 public class MainFrame extends javax.swing.JFrame {
-    
+    JScrollBar jsb;
     String logtxt;
     /**
      * Creates new form MainFrame
@@ -93,7 +94,7 @@ public class MainFrame extends javax.swing.JFrame {
             lx=this.getX();
             ly=getY();
         //JOptionPane.showMessageDialog(null, "Frame build");
-            
+            jsb=jScrollPane1.getVerticalScrollBar();
             
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -151,9 +152,9 @@ public class MainFrame extends javax.swing.JFrame {
         jButton14 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton21 = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jButton9 = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
@@ -161,12 +162,14 @@ public class MainFrame extends javax.swing.JFrame {
         jButton12 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton23 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jButton6 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
         jButton19 = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel(){
@@ -179,6 +182,8 @@ public class MainFrame extends javax.swing.JFrame {
         jButton16 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
         jButton17 = new javax.swing.JButton();
+        jButton20 = new javax.swing.JButton();
+        jLabel8 = new javax.swing.JLabel();
 
         openM.setText("Open");
         openM.addActionListener(new java.awt.event.ActionListener() {
@@ -288,7 +293,7 @@ public class MainFrame extends javax.swing.JFrame {
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -310,7 +315,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addGap(22, 22, 22)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -391,7 +396,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 418, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -421,6 +426,18 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        jScrollPane1.setAutoscrolls(true);
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jScrollPane1MousePressed(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane1MouseClicked(evt);
+            }
+        });
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -439,6 +456,13 @@ public class MainFrame extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTable1);
 
+        jButton21.setText("Pause");
+        jButton21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton21ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -447,17 +471,21 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 821, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton21)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton14))
-                    .addComponent(jScrollPane1))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 865, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 508, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton14)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton14)
+                    .addComponent(jButton21))
                 .addContainerGap())
         );
 
@@ -552,6 +580,14 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton23.setFont(new java.awt.Font("A Dark Wedding", 0, 18)); // NOI18N
+        jButton23.setText("Reboot");
+        jButton23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton23ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -570,22 +606,22 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(57, 57, 57)
-                .addComponent(jLabel3))
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton23, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(57, 57, 57))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jButton9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel3))
-                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jButton7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel6Layout.createSequentialGroup()
-                            .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel6Layout.createSequentialGroup()
+                            .addComponent(jButton23)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton11)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(25, 25, 25)
@@ -594,7 +630,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -658,7 +694,8 @@ public class MainFrame extends javax.swing.JFrame {
                         .addComponent(jButton18)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton19)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -667,9 +704,10 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton6)
                     .addComponent(jButton18)
-                    .addComponent(jButton19))
+                    .addComponent(jButton19)
+                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -743,6 +781,16 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(0, 53, Short.MAX_VALUE))
         );
 
+        jButton20.setBackground(new java.awt.Color(255, 100, 100));
+        jButton20.setFont(new java.awt.Font("A Dark Wedding", 0, 18)); // NOI18N
+        jButton20.setText("Refresh Data");
+        jButton20.setEnabled(false);
+        jButton20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton20ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -750,7 +798,11 @@ public class MainFrame extends javax.swing.JFrame {
             .addComponent(jTabbedPane1)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton20)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel5))
             .addComponent(jPanel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -760,10 +812,14 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jButton20))
+                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -771,7 +827,7 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     String device,model,build,brand,serial,soc,os,osn,sdk,busybox,sdev;
     Thread ScanThread,statusThread,logcat;
-    boolean root;
+    boolean root,rootadb,recovery;
     Connection conc,cons;
     /**
      * Starts scanning of connected device and fetches info, screenshot, logcat info and starts monitor.
@@ -811,16 +867,16 @@ public class MainFrame extends javax.swing.JFrame {
                     eng.clearDev();
                     screen=ImageIO.read(getClass().getResource("/ani/ads/search.png"));
                     jPanel7.repaint();
+                    eng.run(eng.adb,"start-server");
                     
                     // TODO add your handling code here:
                     /*
                     jLabel1.setText("Killing Server...");
                     eng.run(eng.adb,"kill-server");
-                    jLabel1.setText("Restarting Server...");
-                    eng.run(eng.adb,"start-server");
                     jLabel1.setText("<html><body><b>Waiting</b> for a device to be connected... Make sure you have <b>connected properly and given proper permissions</b></body></html>");
                     eng.run(eng.adb,"wait-for-device");
                     */
+                    
                     String temp[]=eng.run(eng.adb,"devices").trim().split("\n");
                     if(temp.length<=1)jLabel6.setText("<html><body><h1>No devices Found!!!</h1><p><b>Check</b> the Following:<ol>"
                             + "<li>Your <b>ADB is enabled</b></li>"
@@ -829,7 +885,7 @@ public class MainFrame extends javax.swing.JFrame {
                             + "</ol></p><p>To <b>Enable ADB</b> you must:<ol>"
                             + "<li><b>Jellybean(4.1), ICS, CM9 and below (<= 4.1)</b> : Settings -> Developer Options -> Enable USB Debugging or Enable ADB</li>"
                             + "<li><b>JellyBean(4.2), KitKat, CM10 and up (>= 4.2)</b> : Settings -> About Device -> Build Number (Tap 3-5 times) -> back to Settings -> Developer Options -> Enable USB Debugging or Enable ADB</li>"
-                            + "<li><b>MIUI</b> : Settings -> About Device -> Build Number (Tap 3-5 times) -> back to Settings -> Additional Settings -> Developer Options -> Enable USB Debugging or Enable ADB</li>"
+                            + "<li><b>MIUI</b> : Settings -> About Device -> MIUI Version( Tap 3-5 times) -> back to Settings -> Additional Settings -> Developer Options -> Enable USB Debugging or Enable ADB</li>"
                             + "<li><b>Other Custom ROMs </b> : Search internet with the name of the rom and version if above doesnt works</li>"
                             + "</ol></p></body></html>");
                     else{
@@ -838,7 +894,27 @@ public class MainFrame extends javax.swing.JFrame {
                             devices[i]=temp[i+1].replaceAll(((char)9)+"", " ");
                         }
                         sdev=JOptionPane.showInputDialog(null,"Select the Device:","Devices" , -1, null, devices, devices[0]).toString();
-                    sdev=sdev.trim().substring(0, sdev.indexOf(" "));
+                    if(sdev!=null)
+                        if(sdev.endsWith("offline")){
+                        jLabel6.setText("<html><body>Please make sure that you have <b>provided permission</b> to control ADB (a pop up box will be displayed right now if you havent already granted permission), I am waiting for 5 seconds.</body></html>");
+                            try {
+                                Thread.sleep(5000);
+                            } catch (InterruptedException ex) {
+                                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            jLabel6.setText("");
+                            temp=eng.run(eng.adb,"devices").trim().split("\n");
+                            if(temp.length>1){
+                                for(String k:devices)
+                                if(k.contains(sdev)&&k.endsWith("offline"))sdev=null;
+                            }
+                            else{
+                                sdev=null;
+                            }
+                    }
+                    recovery=sdev.trim().endsWith("recovery");
+                    if(sdev!=null){
+                        sdev=sdev.trim().substring(0, sdev.indexOf(" "));
                     eng.setdev(sdev);
                     model=eng.getprop("ro.product.device");
                     device=eng.getprop("ro.product.model");
@@ -850,23 +926,61 @@ public class MainFrame extends javax.swing.JFrame {
                     soc=eng.getprop("ro.board.platform");
                     busybox=eng.run(eng.adb,"shell","busybox");
                     root=eng.rootCheck();
+                    rootadb=eng.rootCheckADB();
                     String s=eng.getShot();
-                    jPanel8.setEnabled(root);
                     screen=ImageIO.read(new File(s));
                     jPanel7.repaint();
                     jLabel6.setText("["+brand+" "+model+" Screenshot]");
-                    if(root){
+                    if(root&&!rootadb){
+                        if(eng.run(eng.adb,"shell","pm","list","packages").contains("eu.chainfire.adbd")){
+                            JOptionPane.showMessageDialog(null,"<html><body><ol><li>Please open <b>adbd Insecure</b> app</li>"
+                                        + "<li> <b>grant permissions</b></li>"
+                                        + "<li> then click on no thanks (prefferably)</li>"
+                                            
+                                        + "<li>check <b>Enable insecure adbd</b></li>"
+                                            + "<li>then open the app again</li>"
+                                        + "<li>check <b>Enable at boot</b></li>"
+                                        + "<li>Click OK below</li>");
+                            
+                    jButton1.setText("Scan");
+                    return;
+                                    
+                        }else if(JOptionPane.showConfirmDialog(null, "Looks like you are rooted, yet we cannot get enough permissions. Are you on cyanogenmod?","",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+                            JOptionPane.showMessageDialog(null, "Please enable root for Apps and ADB in Development Settings");
+                        }else{
+                            if(JOptionPane.showConfirmDialog(null, "Should I install an app which will allow us to fetch root?", "", JOptionPane.YES_NO_OPTION)==0){
+                                String ret=eng.run(eng.adb,"install",eng.ush+"/.ads/adbd-insecure.apk");
+                                if(ret.trim().toLowerCase().endsWith("success")){
+                                    JOptionPane.showMessageDialog(null,"<html><body><ul><li>Please open <b>adbd Insecure</b> app</li>"
+                                        + "<li> <b>grant permissions</b></li>"
+                                        + "<li> then click on no thanks (prefferably)</li>"
+                                            
+                                        + "<li>check <b>Enable insecure adbd</b></li>"
+                                            + "<li>then open the app again<li>"
+                                        + "<li>check <b>Enable at boot</b></li>"
+                                        + "<li>Click OK below</li>");
+                                    jButton1.setText("Scan");
+                    return;
+                                }
+                                else JOptionPane.showMessageDialog(null, "Couldn't install: "+ret);
+                            }
+                        }
+                        
+                        rootadb=eng.rootCheckADB();
+                    }
+                    jTabbedPane1.setEnabledAt(4, rootadb);
+                    if(rootadb){
                             try {
                                 Class.forName("org.sqlite.JDBC");
                         eng.run(eng.adb,"pull","/data/data/com.android.providers.contacts/databases/",eng.ush+"/.ads/");
                         eng.run(eng.adb,"pull","/data/data/com.android.providers.telephony/databases/",eng.ush+"/.ads/");
                             cons=DriverManager.getConnection("jdbc:sqlite:"+eng.ush+"/.ads/mmssms.db");
                             conc=DriverManager.getConnection("jdbc:sqlite:"+eng.ush+"/.ads/contacts2.db");
+                            
                             } catch (SQLException | ClassNotFoundException ex) {
                                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                             }
-                    }
-                    
+                        }
                     if(busybox.toLowerCase().startsWith("busybox"))busybox="Yes";
                     else busybox="No";
                     jLabel1.setText("<html><body bgcolor><table>" +
@@ -876,8 +990,10 @@ public class MainFrame extends javax.swing.JFrame {
                             + "<tr><td><b>Android Version:</b></td><td>"+os+"("+eng.getAndroid()+")</td></tr>"
                             + "<tr><td><b>Android SDK:</b></td><td>"+sdk+"</td></tr>"
                             + "<tr><td><b>SOC:</b></td><td>"+soc+"</td></tr>"
-                            + "<tr><td><b>Root enabled:</b></td><td>"+(root?"Yes":"No (maybe not permitted over adb)")+"</td></tr>"
+                            + "<tr><td><b>Root enabled:</b></td><td>"+(root?"Yes":"No")+"</td></tr>"
+                            + "<tr><td><b>Root enabled over ADB:</b></td><td>"+(rootadb?"Yes":"No")+"</td></tr>"
                             + "<tr><td><b>Busybox:</b></td><td>"+busybox+"</td></tr>"
+                            
                             + "</table></body></html>");
                     
                     
@@ -893,13 +1009,18 @@ public class MainFrame extends javax.swing.JFrame {
                                     jLabel5.setText("Finishing Connection...");
                                     d=5;
                                     jLabel4.setText("<html><body ><font color=#009900><b>Connected</b> :</font><u> "+brand+" "+device+"</u></body></html>");
+                                    jButton20.setEnabled(true);
+                                }else if(!recovery&&k.trim().toLowerCase().endsWith("state: unknown")){
                                     
-                                }else if(k.trim().toLowerCase().endsWith("state: unknown")){
                                     jLabel5.setText("Resetting...");
                                     d=5;
                                     jLabel4.setText("<html><body ><font color=#FF0000><b>Disconnected</b></font></body></html>");
+                                    jButton20.setEnabled(false);
                                     p.destroy();
                                     resetall();
+                                }else{
+                                    jLabel4.setText("<html><body ><font color=#FFFF00><b>Recovery Mode</b></font></body></html>");
+                                    
                                 }
                                 k+=(char)a;
                             }while(p.isAlive());
@@ -920,22 +1041,36 @@ public class MainFrame extends javax.swing.JFrame {
                                 if(a!=-1){
                                     d=5;
                                     jLabel5.setText("Loading logcat...");
+                                    jTabbedPane1.setEnabledAt(2, false);
                                     if(a=='\n'){
+                                        Object[] ob;
+                                        String[] head;
+                                        try{
+                                        strk=strk.trim();
                                         int i=0;
-                                        Object[] ob=new Object[6];
-                                        ob[5]="";
-                                        for(String st:trimSpac(strk).split(" ")){
-                                            if(i<5){
-                                                ob[i]=st;
-                                            }
-                                            else if(st!=null){
-                                                ob[5]+=st;
-                                            }
-                                            i++;
+                                        ob=new Object[4];
+                                        if(strk.startsWith("-")){
+                                            ob[3]=strk;
+                                        }
+                                        else{
+                                        ob[0]=strk.substring(0,strk.indexOf("/"));
+                                        ob[1]=strk.substring(strk.indexOf("/")+1,strk.indexOf("("));
+                                        ob[2]=strk.substring(strk.indexOf("(")+1,strk.indexOf(")"));
+                                        ob[3]=strk.substring(strk.indexOf(":")+1);
+                                        }
+                                        head=new String[]{"Type","Service","PID","Message"};
+                                        }catch(IndexOutOfBoundsException ex){
+                                            ob=new Object[1];
+                                            ob[0]=strk.trim();
+                                            head=new String[]{"Message"};
                                         }
                                         logal.add(ob);
-                                        jTable1.setModel(new DefaultTableModel(logal.toArray(new Object[0][6]), new String[6]));
+                                        if(!logpause){jTable1.setModel(new DefaultTableModel(logal.toArray(new Object[0][ob.length]), head));
+                                        if(jsb.getValue()>(jsb.getMaximum()-jsb.getVisibleAmount()-100))jsb.setValue(jsb.getMaximum());
+                                        }
+                                        //System.out.println("Logcat-> "+jsb.getValue()+" "+jsb.getMaximum()+" "+jsb.getVisibleAmount());
                                         strk="";
+                                        
                                     }
                                     else strk+=((char)a+"");
                                     
@@ -947,6 +1082,7 @@ public class MainFrame extends javax.swing.JFrame {
                         }
                     
                     });
+                    
                     logcat.start();
                     Timer t=new Timer();
                     t.scheduleAtFixedRate(new TimerTask(){
@@ -954,10 +1090,14 @@ public class MainFrame extends javax.swing.JFrame {
                         @Override
                         public void run() {
                             d--;
-                            if(d>=0)jLabel5.setText("");//To change body of generated methods, choose Tools | Templates.
+                            if(d==0){
+                                jTabbedPane1.setEnabledAt(2, true);
+                                jLabel5.setText("");
+                            }//To change body of generated methods, choose Tools | Templates.
                         }
-                    },0, 1000);
+                    },0, 100);
                     
+                    }
                     }
                     jButton1.setText("Scan");
                     jTabbedPane1.setEnabled(true);
@@ -971,6 +1111,7 @@ public class MainFrame extends javax.swing.JFrame {
             ScanThread.start();
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+    boolean logpause;
     String trimSpac(String s){
         while(true){
             if(s.contains("  ")){
@@ -980,7 +1121,7 @@ public class MainFrame extends javax.swing.JFrame {
         return s;
     }
     ArrayList<Object[]> logal=new ArrayList<>();
-    String curdird="/storage/";
+    String homedir="/",basedir="/",curdird=homedir;
     BufferedImage screen;
     int d=0;
     
@@ -1031,7 +1172,7 @@ public class MainFrame extends javax.swing.JFrame {
                 
             }
             
-            if(curdird.equals("/storage/")){
+            if(curdird.equals(basedir)){
                 newFM.setEnabled(false);
                 backM.setEnabled(false);
                 deleteM.setEnabled(false);
@@ -1041,14 +1182,14 @@ public class MainFrame extends javax.swing.JFrame {
         }
         
         if(evt.getClickCount()==2){
-            if(((FType)jList1.getSelectedValue()).to().trim().equals("/storage/")){
-                curdird="/storage/";
+            if(((FType)jList1.getSelectedValue()).to().trim().equals(basedir)){
+                curdird=basedir;
             }
             else{
                 FType ft=(FType)jList1.getSelectedValue();
                 String k=(ft).to().trim().toLowerCase();//kr=eng.run(eng.adb,"shell", "ls",curdird+k+"/").toLowerCase();
                 
-                if(!(ft.fo().equals("4")||ft.fo().equals("0"))){
+                if((ft.fo().equals("-"))){
                     /*String sde=JOptionPane.showInputDialog(null, "What would you like to do with "+k+"?", "Selection",-1, null, new String[]{"View as Text File","Copy to Computer and Open as default"},null).toString();
                     if(sde!=null){
                     if(sde.startsWith("View")){
@@ -1112,10 +1253,10 @@ public class MainFrame extends javax.swing.JFrame {
             File f=jfc.getSelectedFile();
             if(f!=null&&f.getAbsolutePath().endsWith(".apk")){
                 try {
-                    jLabel3.setText("Installing...");
+                    JOptionPane.showMessageDialog(null,"Installing...");
                     String ret=eng.run(eng.adb,"install",f.getAbsolutePath());
-                    if(ret.trim().toLowerCase().endsWith("success"))jLabel3.setText("Installed!");
-                    else jLabel3.setText( "Couldn't install: "+ret);
+                    if(ret.trim().toLowerCase().endsWith("success"))JOptionPane.showMessageDialog(null,"Installed!");
+                    else JOptionPane.showMessageDialog(null, "Couldn't install: "+ret);
                 } catch (IOException ex) {
                     Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -1130,16 +1271,18 @@ public class MainFrame extends javax.swing.JFrame {
         new Thread(() -> {
             try {
                 // TODO add your handling code here:
-                String pkgs[]=eng.run(eng.adb,"shell","pm","list","packages","-3").split("\n");
+                String pkgs[]=eng.run(eng.adb,"shell","pm","list","packages",(rootadb?"":"-3")).split("\n");
                 for(int i=0;i<pkgs.length;i++){
                     pkgs[i]=pkgs[i].substring(pkgs[i].indexOf(":")+1);
                 }
                 String pname=JOptionPane.showInputDialog(null, "Select the Package:", "Uninstaller", -1, null, pkgs, pkgs[0]).toString();
                 if(pname !=null){
-                    jLabel3.setText("Uninstalling...");
-                    String ret=eng.run(eng.adb,"uninstall",pname);
-                    if(ret.trim().toLowerCase().endsWith("success"))jLabel3.setText("Uninstalled!");
-                    else jLabel3.setText( "Couldn't install: "+ret);
+                    if(!eng.run(eng.adb,"shell","pm","list","packages","-3").trim().contains(pname.trim()))
+                        if(JOptionPane.showConfirmDialog(null,"Are you sure you want to uninstall a system app? It can be disastrous!")!=0)return;
+                    JOptionPane.showMessageDialog(null,"Uninstalling "+pname+". Click OK to Continue");
+                    String ret=eng.run(eng.adb,"uninstall",pname.trim());
+                    if(ret.trim().toLowerCase().endsWith("success"))JOptionPane.showMessageDialog(null,"Uninstalled!");
+                    else JOptionPane.showMessageDialog(null,"Couldn't uninstall: "+ret);
                 }
             } catch (IOException ex) {
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -1182,11 +1325,11 @@ public class MainFrame extends javax.swing.JFrame {
                     File dr=f;
                     if(!f.getAbsolutePath().endsWith(".ab"))dr=new File(f.getAbsolutePath().trim()+".ab");
                     dr.createNewFile();
-                    //jLabel3.setText("Backing Up... (please confirm in your phone)");
-                    jLabel5.setText("Backing up... (Please confirm in your phone)");
+                    jButton8.setText("Backing Up...");
+                    JOptionPane.showMessageDialog(null,"Backing up... (Please confirm in your phone) after clicking OK");
                     eng.run(eng.adb,"backup","-f","'"+dr.getAbsolutePath().trim()+"'","-all");
                     Thread.sleep(500);
-                    jLabel5.setText("");
+                    jButton8.setText("Backup");
                     jButton8.setEnabled(true);
                     
                 } catch (IOException | InterruptedException ex) {
@@ -1227,9 +1370,8 @@ public class MainFrame extends javax.swing.JFrame {
                     File dr=f;
                     if(!f.getAbsolutePath().endsWith(".ab"))dr=new File(f.getAbsolutePath().trim()+".ab");
                     dr.createNewFile();
-                    jLabel3.setText("Restoring... (please confirm in your phone)");
+                    JOptionPane.showMessageDialog(null,"Restoring... (please confirm in your phone) after clicking OK");
                     eng.run(eng.adb,"restore",dr.getAbsolutePath().trim());
-                    jLabel3.setText("");
                     jButton8.setEnabled(true);
                     
                 } catch (IOException ex) {
@@ -1246,7 +1388,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         try {
             // TODO add your handling code here:
-            JOptionPane.showMessageDialog(null, eng.run(eng.adb,"reboot","recovery"));
+            eng.run(eng.adb,"reboot","recovery");
             resetall();
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -1260,7 +1402,7 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             // TODO add your handling code here:
-            JOptionPane.showMessageDialog(null, eng.run(eng.adb,"reboot","bootloader"));
+            eng.run(eng.adb,"reboot","bootloader");
             resetall();
         } catch (IOException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
@@ -1277,8 +1419,8 @@ public class MainFrame extends javax.swing.JFrame {
                     for(int i=0;i<cda.length-1;i++){
                         curdird+=cda[i]+"/";
                     }
-                    if(!curdird.startsWith("/storage/"))
-                        curdird="/storage/";
+                    if(!curdird.startsWith(basedir))
+                        curdird=homedir;
                                 
                     refreshDir();
     }//GEN-LAST:event_jButton13ActionPerformed
@@ -1380,7 +1522,7 @@ BufferedImage footer;
                 Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             } 
         }
-        JOptionPane.showMessageDialog(null, "<html><body><p align=center><h1>Android Device Suite</h1><p align=right><i>for Linux</i></p><hr><p>Developed by &copy; <b>Aniruddha Sarkar</b> <br> email: sarkar4540@gmail.com</p><p>Licensed under <b>GNU/GPLv2</b>.</p></p></body></html>","Development",0,new ImageIcon(icon.get(0)));
+        JOptionPane.showMessageDialog(null, "<html><body><p align=center><h1>Android Device Suite</h1><p align=right><i>for Linux</i></p><hr><p>Developed by &copy; <b>Aniruddha Sarkar</b> <br> email: sarkar4540@gmail.com</p><p>Licensed under <b>Apache License v2</b>.</p></p></body></html>","Development",0,new ImageIcon(icon.get(0)));
     }//GEN-LAST:event_jButton17ActionPerformed
 
     private void openMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMActionPerformed
@@ -1388,7 +1530,7 @@ BufferedImage footer;
         FType ft=(FType)jList1.getSelectedValue();
                 String k=(ft).to().trim().toLowerCase();//kr=eng.run(eng.adb,"shell", "ls",curdird+k+"/").toLowerCase();
                 
-                if(!(ft.fo().equals("4")||ft.fo().equals("0"))){
+                if((ft.fo().equals("-"))){
                     /*String sde=JOptionPane.showInputDialog(null, "What would you like to do with "+k+"?", "Selection",-1, null, new String[]{"View as Text File","Copy to Computer and Open as default"},null).toString();
                     if(sde!=null){
                     if(sde.startsWith("View")){
@@ -1434,8 +1576,8 @@ BufferedImage footer;
                     for(int i=0;i<cda.length-1;i++){
                         curdird+=cda[i]+"/";
                     }
-                    if(!curdird.startsWith("/storage/"))
-                        curdird="/storage/";
+                    if(!curdird.startsWith(basedir))
+                        curdird=homedir;
                                 
                     refreshDir();
     }//GEN-LAST:event_backMActionPerformed
@@ -1576,14 +1718,13 @@ BufferedImage footer;
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-        int r=jTable1.getSelectedRow();
-        if(r>-1){
-            JOptionPane.showMessageDialog(null, "Date:"+jTable1.getValueAt(r, 0)+"  Time:"+
-                    jTable1.getValueAt(r, 1)+"\n"+
-                    jTable1.getValueAt(r, 2)+"\n"+
-                    jTable1.getValueAt(r, 3)+"\n"+
-                    jTable1.getValueAt(r, 4)+"\n"+
-                    jTable1.getValueAt(r, 5));
+        // TODO add your handling code here:
+        int dk=jTable1.getSelectedRow();
+        if(dk>=0){
+            Object[] ko=logal.get(dk);
+            JOptionPane.showMessageDialog(null, "<html><body><p>Type:"+ko[0]+"</p>"
+                    + "<p>Service:"+ko[1]+"( ID="+ko[2]+" )</p>"
+                    + "<p>Message:<br/>"+ko[3]+"</p></body></html>");
         }
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -1721,6 +1862,85 @@ BufferedImage footer;
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton19ActionPerformed
+
+    private void jButton20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton20ActionPerformed
+        new Thread(()->{
+        try {
+            jLabel8.setText("Please wait...");
+            // TODO add your handling code here:
+            model=eng.getprop("ro.product.device");
+            device=eng.getprop("ro.product.model");
+            brand=eng.getprop("ro.product.brand");
+            ((TitledBorder)jPanel4.getBorder()).setTitle(brand+" "+device);
+            os=eng.getprop("ro.build.version.release");
+            sdk=eng.getprop("ro.build.version.sdk");
+            build =eng.getprop("ro.build.display.id");
+            soc=eng.getprop("ro.board.platform");
+            busybox=eng.run(eng.adb,"shell","busybox");
+            root=eng.rootCheck();
+            rootadb=eng.rootCheckADB();
+            String s=eng.getShot();
+            screen=ImageIO.read(new File(s));
+            jPanel7.repaint();
+            jLabel6.setText("["+brand+" "+model+" Screenshot]");
+            if(rootadb){
+                            try {
+                                Class.forName("org.sqlite.JDBC");
+                        eng.run(eng.adb,"pull","/data/data/com.android.providers.contacts/databases/",eng.ush+"/.ads/");
+                        eng.run(eng.adb,"pull","/data/data/com.android.providers.telephony/databases/",eng.ush+"/.ads/");
+                            cons=DriverManager.getConnection("jdbc:sqlite:"+eng.ush+"/.ads/mmssms.db");
+                            conc=DriverManager.getConnection("jdbc:sqlite:"+eng.ush+"/.ads/contacts2.db");
+                            
+                            } catch (SQLException | ClassNotFoundException ex) {
+                                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }
+                    jTabbedPane1.setEnabledAt(4, rootadb);
+                    if(busybox.toLowerCase().startsWith("busybox"))busybox="Yes";
+                    else busybox="No";
+                    jLabel1.setText("<html><body bgcolor><table>" +
+                            "<tr><td><b>Brand:</b></td><td>"+brand+"</td></tr><tr><td><b>Device:</b></td><td>"+device
+                            +"</td></tr><tr><td><b>Model:</b></td><td>"+model+"</td></tr>"
+                            + "<tr><td><b>Build:</b></td><td>"+build+"</td></tr>"
+                            + "<tr><td><b>Android Version:</b></td><td>"+os+"("+eng.getAndroid()+")</td></tr>"
+                            + "<tr><td><b>Android SDK:</b></td><td>"+sdk+"</td></tr>"
+                            + "<tr><td><b>SOC:</b></td><td>"+soc+"</td></tr>"
+                            + "<tr><td><b>Root enabled:</b></td><td>"+(root?"Yes":"No")+"</td></tr>"
+                            + "<tr><td><b>Root enabled over ADB:</b></td><td>"+(rootadb?"Yes":"No")+"</td></tr>"
+                            + "<tr><td><b>Busybox:</b></td><td>"+busybox+"</td></tr>"
+                            + "</table></body></html>");
+            jLabel8.setText("");
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }).start();
+    }//GEN-LAST:event_jButton20ActionPerformed
+
+    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+
+    }//GEN-LAST:event_jScrollPane1MouseClicked
+
+    private void jScrollPane1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MousePressed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jScrollPane1MousePressed
+
+    private void jButton21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton21ActionPerformed
+        // TODO add your handling code here:
+        logpause=!logpause;
+        jButton21.setText(logpause?"Resume":"Pause");
+    }//GEN-LAST:event_jButton21ActionPerformed
+
+    private void jButton23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton23ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            eng.run(eng.adb,"reboot");
+            resetall();
+        } catch (IOException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton23ActionPerformed
     int lx=0,ly=0,px,py;
     
     /**
@@ -1736,9 +1956,10 @@ BufferedImage footer;
                 jLabel2.setText("Loading...");
                 for (String str : strings) {
                     if(str!=null)
+                        if((str.trim().startsWith("ld")||str.trim().startsWith("d")||str.trim().startsWith("-")))
                     if(!str.trim().equals("")){
                     String name=str.substring(str.indexOf(" ")).trim(),type=str.substring(0,str.indexOf(" ")).trim();
-                    FType ft=new FType(name,(type.equals("4")||type.equals("0"))?"[Directory]":""/* "[File]"*/,type);
+                    FType ft=new FType(name,(type.equals("ld")||type.equals("d"))?"[Directory]":""/* "[File]"*/,type);
                     /*if(kr.contains("permission denied")){
                         FType ft=new FType(str,"-> (No Permission)");
                         al.add(ft);
@@ -1865,6 +2086,9 @@ BufferedImage footer;
     private javax.swing.JButton jButton18;
     private javax.swing.JButton jButton19;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton20;
+    private javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton23;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -1874,10 +2098,11 @@ BufferedImage footer;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private ani.ads.FileManager jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

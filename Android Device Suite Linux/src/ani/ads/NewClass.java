@@ -15,6 +15,10 @@
  */
 package ani.ads;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  * Class for testing purposes
@@ -25,5 +29,11 @@ package ani.ads;
 
 public class NewClass {
     public static void main(String a[]){
+        try {
+            Engine eng=new Engine();
+            System.out.println(eng.run(eng.adb,"shell","pm","list","packages").contains("eu.chainfire.adbd"));
+        } catch (IOException ex) {
+            Logger.getLogger(NewClass.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

@@ -45,7 +45,7 @@ public class FileManager extends javax.swing.JPanel {
             
             FType f=(FType)m.getElementAt(i);
             MLabel b=new MLabel(i,f,this);
-            b.setIcon((f.fo().equals("4")||f.fo().equals("0"))?folder:file);
+            b.setIcon((f.fo().equals("-"))?file:folder);
             
             this.add(b,i);
             

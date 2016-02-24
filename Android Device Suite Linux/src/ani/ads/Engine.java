@@ -50,7 +50,7 @@ public String adb,dev;
      * 
      */
     public Engine(){
-        System.setErr(new PrintStream(new OutputStream() {
+        /*System.setErr(new PrintStream(new OutputStream() {
             
             @Override
             public void write(int b) throws IOException {
@@ -65,6 +65,7 @@ public String adb,dev;
                 logtxt+=(char)b; //To change body of generated methods, choose Tools | Templates.
             }
         }));
+        */
         setup();
         File f=new File(ush+"/.ads/enginelog.txt");
         if(f.exists())f.delete();
@@ -107,14 +108,14 @@ public String adb,dev;
         else{
             
             String sel=""+JOptionPane.showInputDialog(null, "Select your Operating System:", "Android Device Suite", -1, null, new String[]{"Debian (or derivatives like Ubuntu)","Other Linux Distro","Windows","Other"}, this);
+            
             if(sel.startsWith("Debian")){
                 Thread t=new Thread(() -> {
                     FileOutputStream fis;
                     InputStream is;
                     try {
-                        String ske=run("adb");
-                        System.out.println(ske);
-                        if(!(ske.trim().toLowerCase().startsWith("///\\\\android debug bridge")||ske.trim().toLowerCase().startsWith("android debug bridge"))){
+                        String ske=runNoEx("adb");
+                        if(!(ske.trim().toLowerCase().contains("android"))){
                             /*JOptionPane.showMessageDialog(null, "<html><body><p>Please open a Package Manager and Install:<ol><li> android-tools-adb</li><li> android-tools-fastboot</li></ol></p><p align=center><b>OR</b></p><p>Run \n" +
                             "sudo apt-get install android-tools-adb android-tools-fastboot in command line</p></body></html>");
                             */
@@ -160,7 +161,16 @@ public String adb,dev;
                         }while(x>-1);
                         is.close();
                         fis.close();
-                        String s=run("gksudo","sh",ush+"/.ads/ubuntu.sh");
+                        String s=runNoEx("gksudo","sh",ush+"/.ads/ubuntu.sh");
+                        is=getClass().getResourceAsStream("/ani/ads/tools/adbd-insecure.apk");
+                        
+                        fis = new FileOutputStream(ush+"/.ads/adbd-insecure.apk");
+                        do{
+                            x=is.read();
+                            if(x>-1)fis.write(x);
+                        }while(x>-1);
+                        is.close();
+                        fis.close();
                         adb="adb";
                         writeProps();
                         s=s.replaceAll("\n", "<br/>");
@@ -177,7 +187,7 @@ public String adb,dev;
             else if(sel.startsWith("Other Linux")){
                 try {
                     String ske=run("adb");
-                    if(!ske.toLowerCase().startsWith("android debug bridge")){
+                    if(!ske.toLowerCase().contains("android")){
                         JOptionPane.showMessageDialog(null, "<html><body><p>Please open a Package Manager and Install:<ol><li> android-tools-adb</li><li> android-tools-fastboot</li></ol> and Restart</p></body></html>");
                         System.exit(1);
                     }
@@ -220,7 +230,6 @@ public String adb,dev;
     */
     public String run(String... cmd) throws IOException{
             String out="";
-            try {
                 String[] cmds;
                 if(dev==null)cmds=cmd;
                 else{
@@ -253,15 +262,37 @@ public String adb,dev;
                 }while(a>-1||b>-1||p.isAlive());
                 System.out.println("Run -> ("+Arrays.toString(cmds)+") ->"+out);
                 if(p.exitValue()!=0)throw new IOException("Exit value not zero"+out);
-            } catch (IOException ex) {
-                Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
+        return out;
+    }
+    public String runNoEx(String... cmd){
+       
+        String out="";
+    try {
+        
+        Process p=new ProcessBuilder(cmd).start();
+        InputStream is=p.getInputStream();
+        InputStream es=p.getErrorStream();
+        int a,b;
+        do{
+            a=is.read();
+            b=es.read();
+            if(a>-1)out+=(char)a;
+            if(b>-1){
+                out+=(char)b;
+                System.err.print((char)b);
             }
+        }while(a>-1||b>-1||p.isAlive());
+        System.out.println("Run -> ("+Arrays.toString(cmd)+") ->"+out);
+        //if(p.exitValue()!=0)throw new IOException("Exit value not zero"+out);
+    } catch (IOException ex) {
+        Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
+    }
         return out;
     }
     
     
     
-    public boolean rootCheck() throws IOException{
+    public boolean rootCheckADB() throws IOException{
             String out="";
             try {
                 Process p=new ProcessBuilder(new String[]{adb,"-s",dev,"root"}).start();
@@ -277,6 +308,27 @@ public String adb,dev;
                 p.destroy();
                 out=out.trim().toLowerCase();
                 return out.endsWith("root");
+            } catch (IOException ex) {
+                Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return false;
+    }
+    public boolean rootCheck() throws IOException{
+            String out="";
+            try {
+                Process p=new ProcessBuilder(new String[]{adb,"-s",dev,"shell","su -c echo hello"}).start();
+                InputStream is=p.getInputStream();
+                InputStream es=p.getErrorStream();
+                int a,b;
+                do{
+                    a=is.read();
+                    b=es.read();
+                    if(a>-1)out+=(char)a;
+                    if(b>-1)out+=(char)b;
+                }while(a>-1||b>-1);
+                p.destroy();
+                out=out.trim().toLowerCase();
+                return out.endsWith("hello");
             } catch (IOException ex) {
                 Logger.getLogger(Engine.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -353,8 +405,13 @@ public String adb,dev;
      * @throws java.io.IOException If I/O Error Occurs by Process
      */
    public String[] getchilds(String dir) throws IOException{
+       String s=run(adb,"shell","ls","-F",dir).trim();
+       return s.split("\n");
+    }
+   /*public String[] getchilds(String dir) throws IOException{
        String s=run(adb,"shell","ls","-s","-a",dir),d=s.substring(s.indexOf("\n")).trim();
        if(!s.trim().toLowerCase().startsWith("total"))throw new IOException("Fatal Error!!!!");
        return d.split("\n");
     }
+   */
 }
