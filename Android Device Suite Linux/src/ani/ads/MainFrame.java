@@ -864,9 +864,8 @@ public class MainFrame extends javax.swing.JFrame {
             jButton2.setEnabled(false);
             ScanThread=new Thread(() -> {
                 try {
+                    sdev=null;
                     eng.clearDev();
-                    screen=ImageIO.read(getClass().getResource("/ani/ads/search.png"));
-                    jPanel7.repaint();
                     eng.run(eng.adb,"start-server");
                     
                     // TODO add your handling code here:
@@ -912,8 +911,10 @@ public class MainFrame extends javax.swing.JFrame {
                                 sdev=null;
                             }
                     }
-                    recovery=sdev.trim().endsWith("recovery");
                     if(sdev!=null){
+                    screen=ImageIO.read(getClass().getResource("/ani/ads/search.png"));
+                    jPanel7.repaint();
+                    recovery=sdev.trim().endsWith("recovery");
                         sdev=sdev.trim().substring(0, sdev.indexOf(" "));
                     eng.setdev(sdev);
                     model=eng.getprop("ro.product.device");
@@ -928,8 +929,6 @@ public class MainFrame extends javax.swing.JFrame {
                     root=eng.rootCheck();
                     rootadb=eng.rootCheckADB();
                     String s=eng.getShot();
-                    screen=ImageIO.read(new File(s));
-                    jPanel7.repaint();
                     jLabel6.setText("["+brand+" "+model+" Screenshot]");
                     if(root&&!rootadb){
                         if(eng.run(eng.adb,"shell","pm","list","packages").contains("eu.chainfire.adbd")){
@@ -940,7 +939,8 @@ public class MainFrame extends javax.swing.JFrame {
                                         + "<li>check <b>Enable insecure adbd</b></li>"
                                             + "<li>then open the app again</li>"
                                         + "<li>check <b>Enable at boot</b></li>"
-                                        + "<li>Click OK below</li>");
+                                        + "<li>Click OK below</li>"
+                                    + "<li>Then Rescan</li>");
                             
                     jButton1.setText("Scan");
                     return;
@@ -956,7 +956,7 @@ public class MainFrame extends javax.swing.JFrame {
                                         + "<li> then click on no thanks (prefferably)</li>"
                                             
                                         + "<li>check <b>Enable insecure adbd</b></li>"
-                                            + "<li>then open the app again<li>"
+                                            + "<li>then open the app again</li>"
                                         + "<li>check <b>Enable at boot</b></li>"
                                         + "<li>Click OK below</li>");
                                     jButton1.setText("Scan");
@@ -996,6 +996,8 @@ public class MainFrame extends javax.swing.JFrame {
                             
                             + "</table></body></html>");
                     
+                    screen=ImageIO.read(new File(s));
+                    jPanel7.repaint();
                     
                     statusThread=new Thread(() -> {
                         try {
@@ -1098,11 +1100,11 @@ public class MainFrame extends javax.swing.JFrame {
                     },0, 100);
                     
                     }
-                    }
-                    jButton1.setText("Scan");
                     jTabbedPane1.setEnabled(true);
                     jButton2.setEnabled(true);
                     refreshDir();
+                    }
+                    jButton1.setText("Scan");
                     ScanThread=null;
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, "Error while finding... Please click the Development button on top and support the developer to make things better");
